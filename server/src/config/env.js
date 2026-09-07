@@ -29,7 +29,7 @@ const env = {
   RESULT_MAX_RETRIES: int(process.env.RESULT_MAX_RETRIES, 3),
 
   SGBAU_RESULT_URL: process.env.SGBAU_RESULT_URL || 'https://sgbau.ucanapply.com/result-details',
-  SGBAU_RESULT_SEARCH_ENDPOINT: process.env.SGBAU_RESULT_SEARCH_ENDPOINT || 'https://sgbau.ucanapply.com/result-details',
+  SGBAU_RESULT_SEARCH_ENDPOINT: process.env.SGBAU_RESULT_SEARCH_ENDPOINT || 'https://sgbau.ucanapply.com/get-result-details',
 
   EMAIL_ENABLED: bool(process.env.EMAIL_ENABLED, false),
   SMTP_HOST: process.env.SMTP_HOST || '',

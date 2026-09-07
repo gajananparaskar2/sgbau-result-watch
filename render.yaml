@@ -18,3 +18,8 @@ services:
         value: libsql://sgbau-watch-gajananparaskar2.aws-ap-south-1.turso.io
       - key: TURSO_AUTH_TOKEN
         value: eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3ODg3ODA1NDQsImlkIjoiMDFhMDdiOWYtZjMwMS03OWNiLThhMmItODQwNTY3ZWVmNzhjIiwia2lkIjoiSVB6cGx2VW5wUC1pUFliZm5NRXFoZTc0TGlSTVU2cDFFdGFQRjZaZUp0ZyIsInJpZCI6ImYyN2JmMmIyLTIwMjAtNDU1Mi05ZmNiLTU3NjA4YWI5Mzk1YyJ9.qg4GSSWMvk0JHJvnVW4ZRmv5MBHMF9ZTU203coClogaR3sur3BJ4Qovzt05dchoUZxkAjZ0CkTNjumGun43hBQ
+      - key: SGBAU_RESULT_URL
+        value: https://sgbau.ucanapply.com/result-details
+      - key: SGBAU_RESULT_SEARCH_ENDPOINT
+        value: https://sgbau.ucanapply.com/get-result-details
+
