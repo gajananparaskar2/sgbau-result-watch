@@ -3,6 +3,8 @@ dist/
 build/
 .env
 *.log
+*.db
+*.db-info
 data/*.sqlite
 data/*.sqlite-journal
 server/data/
