@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+.env
+*.log
+data/*.sqlite
+data/*.sqlite-journal
+server/data/
+server/uploads/
+server/generated-pdfs/
+.DS_Store
+coverage/
