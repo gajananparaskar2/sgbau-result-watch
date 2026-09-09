@@ -108,7 +108,7 @@ export function AddProfile() {
         </p>
         <form onSubmit={onSubmit} className="space-y-5">
           {field('university', 'University')}
-          {field('roll_number', 'Roll Number', { required: true, placeholder: 'e.g. 25BD310555' })}
+          {field('roll_number', 'Roll Number', { required: true, placeholder: 'e.g. 24XX123456' })}
           {field('student_name', 'Student Name (optional, for reference only)')}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {field('course', 'Course', {

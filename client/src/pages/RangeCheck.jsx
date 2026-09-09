@@ -16,7 +16,7 @@ function parseRange(startStr, endStr) {
   const endMatch = end.match(/^(.*?)(\d+)$/);
 
   if (!startMatch || !endMatch) {
-    return { valid: false, count: 0, rolls: [], error: 'Roll numbers must end with numeric digits (e.g. 25BD310550).' };
+    return { valid: false, count: 0, rolls: [], error: 'Roll numbers must end with numeric digits (e.g. 24XX123450).' };
   }
 
   const [_, prefixStart, numStartStr] = startMatch;
@@ -53,8 +53,8 @@ export function RangeCheck() {
     course: ALL_NEP_BE_VALUE,
     semester: '4',
     examType: 'Regular',
-    startRoll: '25BD310550',
-    endRoll: '25BD310560'
+    startRoll: '',
+    endRoll: ''
   });
 
   const [isRunning, setIsRunning] = useState(false);
@@ -275,7 +275,7 @@ export function RangeCheck() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. 25BD310550"
+                  placeholder="e.g. 24XX123450"
                   value={form.startRoll}
                   onChange={setField('startRoll')}
                   disabled={isRunning}
@@ -290,7 +290,7 @@ export function RangeCheck() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. 25BD310560"
+                  placeholder="e.g. 24XX123460"
                   value={form.endRoll}
                   onChange={setField('endRoll')}
                   disabled={isRunning}

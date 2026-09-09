@@ -10,7 +10,7 @@ export function InstantCheck() {
     course: ALL_NEP_BE_VALUE,
     semester: '4',
     examType: 'Regular',
-    rollNumber: '25BD310555'
+    rollNumber: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -162,7 +162,7 @@ export function InstantCheck() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. 25BD310555"
+                  placeholder="Enter SGBAU Roll No (e.g. 24XX123456)"
                   value={form.rollNumber}
                   onChange={setField('rollNumber')}
                   className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2 text-sm focus:ring-2 focus:ring-brand-500 font-mono font-medium"

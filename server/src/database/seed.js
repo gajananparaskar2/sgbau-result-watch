@@ -35,7 +35,7 @@ async function seed() {
 
   const existingProfile = await db
     .prepare('SELECT id FROM student_profiles WHERE user_id = ? AND roll_number = ?')
-    .get(devUser.id, '25BD310555');
+    .get(devUser.id, '24XX123456');
 
   if (!existingProfile) {
     await db.prepare(
@@ -44,8 +44,8 @@ async function seed() {
          semester, exam_type, exam_session, academic_year, monitoring_enabled, monitoring_interval)
        VALUES (?, 'SGBAU', ?, ?, 'B.Tech', 'Computer Science & Engineering', 'NEP',
                '4', 'Regular', 'Summer 2026', NULL, 1, 60)`
-    ).run(devUser.id, '25BD310555', 'Test Student');
-    logger.info('Seeded example SGBAU test profile (roll 25BD****55).');
+    ).run(devUser.id, '24XX123456', 'Test Student');
+    logger.info('Seeded example SGBAU test profile (roll 24XX****56).');
   } else {
     logger.info('Example profile already exists, skipping.');
   }

@@ -1,5 +1,5 @@
 /**
- * Masks a roll number for safe logging, e.g. "25BD310555" -> "25BD****55".
+ * Masks a roll number for safe logging, e.g. "24XX123456" -> "24XX****56".
  * Keeps the first 4 and last 2 characters visible; masks the middle.
  */
 function maskRollNumber(rollNumber) {
