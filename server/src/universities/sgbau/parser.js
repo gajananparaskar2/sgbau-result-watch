@@ -201,18 +201,39 @@ function parseResultHtml(html) {
   const backlogsRaw = extractLabelled($, ['Backlog', 'Backlogs', 'ATKT']);
   const resultStatusRaw = extractLabelled($, ['Result', 'Final Result']);
 
-  // Extract from FOUR YEAR B.E. SEMESTER : THIRD (COMPUTER SCIENCE & ENGINEERING) (NEP) header if present
+  // Extract from header line e.g. "FOUR YEAR B.E. SEMESTER : THIRD (CIVIL ENGINEERING) (NEP)"
   const headerLine = $('td:contains("SEMESTER")').text();
   if (headerLine) {
     if (!course && /B\.E\.|B\.Tech/i.test(headerLine)) {
       course = 'B.E';
     }
-    if (!branch && /COMPUTER SCIENCE & ENGINEERING/i.test(headerLine)) {
-      branch = 'Computer Science & Engineering';
+    if (!branch) {
+      const match = headerLine.match(/\(([^)]+)\)\s*\(NEP\)/i) || headerLine.match(/\(([^)]+)\)/i);
+      if (match && !/NEP|CBCS|CGS/i.test(match[1].trim())) {
+        branch = match[1].trim();
+      }
     }
-    if (!semester && /THIRD|3RD/i.test(headerLine)) {
-      semester = '3';
+    if (!semester) {
+      if (/FIRST|1ST/i.test(headerLine)) semester = '1';
+      else if (/SECOND|2ND/i.test(headerLine)) semester = '2';
+      else if (/THIRD|3RD/i.test(headerLine)) semester = '3';
+      else if (/FOURTH|4TH/i.test(headerLine)) semester = '4';
+      else if (/FIFTH|5TH/i.test(headerLine)) semester = '5';
+      else if (/SIXTH|6TH/i.test(headerLine)) semester = '6';
+      else if (/SEVENTH|7TH/i.test(headerLine)) semester = '7';
+      else if (/EIGHTH|8TH/i.test(headerLine)) semester = '8';
     }
+  }
+
+  if (semester) {
+    if (/FIRST|1ST/i.test(semester)) semester = '1';
+    else if (/SECOND|2ND/i.test(semester)) semester = '2';
+    else if (/THIRD|3RD/i.test(semester)) semester = '3';
+    else if (/FOURTH|4TH/i.test(semester)) semester = '4';
+    else if (/FIFTH|5TH/i.test(semester)) semester = '5';
+    else if (/SIXTH|6TH/i.test(semester)) semester = '6';
+    else if (/SEVENTH|7TH/i.test(semester)) semester = '7';
+    else if (/EIGHTH|8TH/i.test(semester)) semester = '8';
   }
 
   const hasAnySignal = subjects.length > 0 || studentName || rollNumber || sgpaRaw || cgpaRaw;
@@ -221,22 +242,28 @@ function parseResultHtml(html) {
     return { status: 'UNRECOGNIZED', html };
   }
 
+  const finalBranch = branch || 'Engineering';
+  const finalCourse = course && branch ? `${course} in ${branch} NEP` : (course || 'B.E NEP');
+
+  const failedCount = subjects.filter((s) => s.grade === 'F' || s.status === 'FAIL').length;
+  const backlogs = backlogsRaw ? toNumberOrNull(backlogsRaw) : failedCount;
+
   return {
     status: 'FOUND',
     data: {
       student_name: studentName,
       roll_number: rollNumber,
       prn,
-      course: course || 'B.E in COMPUTER SCIENCE & ENGINEERING NEP',
-      branch: branch || 'Computer Science & Engineering',
+      course: finalCourse,
+      branch: finalBranch,
       semester: semester || '3',
       academic_year: academicYear,
       result_date: resultDate,
       sgpa: toNumberOrNull(sgpaRaw),
       cgpa: toNumberOrNull(cgpaRaw),
       percentage: toNumberOrNull(percentageRaw),
-      backlogs: backlogsRaw ? toNumberOrNull(backlogsRaw) : 0,
-      result_status_text: resultStatusRaw || 'PASS',
+      backlogs: backlogs || 0,
+      result_status_text: resultStatusRaw || (failedCount > 0 ? 'FAIL' : 'PASS'),
       subjects
     }
   };

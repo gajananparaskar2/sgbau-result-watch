@@ -2,37 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppLayout } from '../layouts/AppLayout.jsx';
 import { api } from '../services/api.js';
-
-const SESSIONS = [
-  'Winter 2025',
-  'Summer 2026',
-  'Summer 2025',
-  'Winter 2024',
-  'Summer 2024'
-];
-
-const COURSES = [
-  'B.E in COMPUTER SCIENCE & ENGINEERING NEP',
-  'B.E in COMPUTER ENGINEERING NEP',
-  'B.E in COMPUTER SCIENCE & ENGINEERING ( DATA SCIENCE ) NEP',
-  'B.Tech Chemical Technology First Year NEP',
-  'Bachelor of Computer Application ( BCA )'
-];
-
-const SEMESTERS = [
-  { value: '3', label: 'Third Semester (Sem 3)' },
-  { value: '4', label: 'Fourth Semester (Sem 4)' },
-  { value: '1', label: 'First Semester (Sem 1)' },
-  { value: '2', label: 'Second Semester (Sem 2)' },
-  { value: '5', label: 'Fifth Semester (Sem 5)' },
-  { value: '6', label: 'Sixth Semester (Sem 6)' }
-];
+import { ALL_COURSES, ALL_NEP_BE_VALUE, SESSIONS, SEMESTERS } from '../constants/courses.js';
 
 export function InstantCheck() {
   const [form, setForm] = useState({
-    session: 'Winter 2025',
-    course: 'B.E in COMPUTER SCIENCE & ENGINEERING NEP',
-    semester: '3',
+    session: 'Summer 2026',
+    course: ALL_NEP_BE_VALUE,
+    semester: '4',
     examType: 'Regular',
     rollNumber: '25BD310555'
   });
@@ -124,16 +100,30 @@ export function InstantCheck() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Course & Branch</label>
+                <label className="block text-sm font-medium mb-1 flex items-center justify-between">
+                  <span>Course & Branch</span>
+                  {form.course === ALL_NEP_BE_VALUE && (
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-semibold">
+                      ⚡ Auto-Detect Mode
+                    </span>
+                  )}
+                </label>
                 <select
                   value={form.course}
                   onChange={setField('course')}
-                  className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 font-medium"
                 >
-                  {COURSES.map((c) => (
-                    <option key={c} value={c}>{c}</option>
+                  {ALL_COURSES.map((c) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
                   ))}
                 </select>
+                {form.course === ALL_NEP_BE_VALUE && (
+                  <p className="text-xs text-brand-600 dark:text-brand-400 mt-1">
+                    Auto-scans all SGBAU NEP B.E branches (CSE, AI&DS, Data Science, IT, ETC, Electrical, Mechanical, Civil, Chemical, IoT) to find the result automatically.
+                  </p>
+                )}
               </div>
 
               <div>
@@ -259,11 +249,15 @@ export function InstantCheck() {
                   )}
 
                   {student.result_status_text && (
-                    <div className="px-4 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-center">
-                      <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider">
+                    <div className={`px-4 py-2 rounded-lg border text-center ${
+                      student.result_status_text === 'PASS'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300'
+                        : 'bg-red-50 dark:bg-red-950/50 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300'
+                    }`}>
+                      <div className="text-xs font-semibold uppercase tracking-wider">
                         Result
                       </div>
-                      <div className="text-2xl font-black text-emerald-700 dark:text-emerald-300">
+                      <div className="text-2xl font-black">
                         {student.result_status_text}
                       </div>
                     </div>
@@ -303,12 +297,12 @@ export function InstantCheck() {
               {/* Meta details */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 text-sm">
                 <div>
-                  <span className="text-gray-500 dark:text-gray-400 block text-xs">Course</span>
-                  <span className="font-medium">{student.course || form.course}</span>
+                  <span className="text-gray-500 dark:text-gray-400 block text-xs">Branch / Course</span>
+                  <span className="font-medium">{student.branch || student.course || form.course}</span>
                 </div>
                 <div>
                   <span className="text-gray-500 dark:text-gray-400 block text-xs">Semester</span>
-                  <span className="font-medium">{student.semester || form.semester}</span>
+                  <span className="font-medium">Sem {student.semester || form.semester}</span>
                 </div>
                 <div>
                   <span className="text-gray-500 dark:text-gray-400 block text-xs">Backlogs</span>

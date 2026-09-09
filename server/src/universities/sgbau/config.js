@@ -70,16 +70,79 @@ const SEMESTER_CODES = {
   10: 'SM10'
 };
 
+// Official SGBAU NEP B.E courses (discovered directly from live portal)
+const NEP_BE_COURSES = [
+  { code: 'C000032', name: 'B.E in COMPUTER SCIENCE & ENGINEERING NEP' },
+  { code: 'C000266', name: 'B.E in ARTIFICIAL INTELLIGENCE AND DATA SCIENCES NEP' },
+  { code: 'C000317', name: 'B.E in COMPUTER SCIENCE & ENGINEERING ( DATA SCIENCE ) NEP' },
+  { code: 'C000027', name: 'B.E in COMPUTER ENGINEERING NEP' },
+  { code: 'C000039', name: 'B.E in INFORMATION TECHNOLOGY NEP' },
+  { code: 'C000037', name: 'B.E in ELECTRONICS & TELECOMMUNICATION ENGG. NEP' },
+  { code: 'C000034', name: 'B.E in ELECTRICAL ENGINEERING NEP' },
+  { code: 'C000041', name: 'B.E in MECHANICAL ENGINEERING NEP' },
+  { code: 'C000031', name: 'B.E in CIVIL ENGINEERING NEP' },
+  { code: 'C000043', name: 'B.E in ELECTRONICS & POWER NEP' },
+  { code: 'C000045', name: 'B.E in CHEMICAL ENGINEERING NEP' },
+  { code: 'C000314', name: '(BE in IOT) B.E in Internet Of Things' },
+  { code: 'C000048', name: 'B.E First Year (NEP)' },
+  { code: 'C000057', name: 'Bachelor of Textile Engineering NEP' },
+  { code: 'C000050', name: 'B.Tech Chemical Technology First Year NEP' },
+  { code: 'C000053', name: 'B.Tech Chemical Technology in Food Technology NEP' },
+  { code: 'C000054', name: 'B.Tech Chemical Technology in Oil & Paint Technology NEP' },
+  { code: 'C000055', name: 'B.Tech Chemical Technology in PetroChemical Technology NEP' },
+  { code: 'C000056', name: 'B.Tech Chemical Technology in Pulp & PaperTechnology NEP' },
+  { code: 'C000013', name: 'B.TECH.(COSMETICS)NEP' }
+];
+
 // Common course code mappings
 const COURSE_CODE_MAP = {
   'c000032': 'C000032',
+  'c000266': 'C000266',
+  'c000317': 'C000317',
+  'c000027': 'C000027',
+  'c000039': 'C000039',
+  'c000037': 'C000037',
+  'c000034': 'C000034',
+  'c000041': 'C000041',
+  'c000031': 'C000031',
+  'c000043': 'C000043',
+  'c000045': 'C000045',
+  'c000314': 'C000314',
+  'c000048': 'C000048',
+  'c000057': 'C000057',
   'cse': 'C000032',
   'b.tech': 'C000032',
   'b.e.(cse)': 'C000032',
   'computer science': 'C000032',
+  'ai': 'C000266',
+  'ai&ds': 'C000266',
+  'artificial intelligence': 'C000266',
   'comp': 'C000027',
-  'ds': 'C000317'
+  'computer engg': 'C000027',
+  'computer engineering': 'C000027',
+  'ds': 'C000317',
+  'data science': 'C000317',
+  'it': 'C000039',
+  'information technology': 'C000039',
+  'etc': 'C000037',
+  'extc': 'C000037',
+  'electronics': 'C000037',
+  'telecommunication': 'C000037',
+  'ee': 'C000034',
+  'electrical': 'C000034',
+  'me': 'C000041',
+  'mechanical': 'C000041',
+  'civil': 'C000031',
+  'chemical': 'C000045',
+  'iot': 'C000314',
+  'first year': 'C000048',
+  'textile': 'C000057'
 };
+
+NEP_BE_COURSES.forEach((c) => {
+  COURSE_CODE_MAP[c.name.toLowerCase()] = c.code;
+  COURSE_CODE_MAP[c.code.toLowerCase()] = c.code;
+});
 
 module.exports = {
   RESULT_PAGE_URL: env.SGBAU_RESULT_URL,
@@ -89,6 +152,7 @@ module.exports = {
   SEMESTER_CODES,
   SESSION_CODES,
   COURSE_CODE_MAP,
+  NEP_BE_COURSES,
   SEMESTER_LABELS: SEMESTER_CODES,
   REQUEST_TIMEOUT_MS: env.RESULT_REQUEST_TIMEOUT_MS,
   MAX_RETRIES: env.RESULT_MAX_RETRIES,
@@ -96,3 +160,4 @@ module.exports = {
     'Mozilla/5.0 (compatible; SGBAUResultWatch/1.0; +https://github.com/your-org/sgbau-result-watch) ' +
     'Personal result monitor operated on behalf of a single student, polling at most once per configured interval.'
 };
+

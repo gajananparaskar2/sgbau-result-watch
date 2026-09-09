@@ -9,8 +9,8 @@ let db = null;
 
 function normalizeArgs(args) {
   if (!args || args.length === 0) return [];
-  if (args.length === 1 && Array.isArray(args[0])) return args[0];
-  return args;
+  const list = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
+  return list.map((v) => (v === undefined ? null : v));
 }
 
 if (env.TURSO_DATABASE_URL && env.TURSO_AUTH_TOKEN) {

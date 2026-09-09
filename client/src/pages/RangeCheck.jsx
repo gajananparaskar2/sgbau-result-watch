@@ -2,31 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AppLayout } from '../layouts/AppLayout.jsx';
 import { api } from '../services/api.js';
-
-const SESSIONS = [
-  'Winter 2025',
-  'Summer 2026',
-  'Summer 2025',
-  'Winter 2024',
-  'Summer 2024'
-];
-
-const COURSES = [
-  'B.E in COMPUTER SCIENCE & ENGINEERING NEP',
-  'B.E in COMPUTER ENGINEERING NEP',
-  'B.E in COMPUTER SCIENCE & ENGINEERING ( DATA SCIENCE ) NEP',
-  'B.Tech Chemical Technology First Year NEP',
-  'Bachelor of Computer Application ( BCA )'
-];
-
-const SEMESTERS = [
-  { value: '3', label: 'Third Semester (Sem 3)' },
-  { value: '4', label: 'Fourth Semester (Sem 4)' },
-  { value: '1', label: 'First Semester (Sem 1)' },
-  { value: '2', label: 'Second Semester (Sem 2)' },
-  { value: '5', label: 'Fifth Semester (Sem 5)' },
-  { value: '6', label: 'Sixth Semester (Sem 6)' }
-];
+import { ALL_COURSES, ALL_NEP_BE_VALUE, SESSIONS, SEMESTERS } from '../constants/courses.js';
 
 const MAX_ROLLS = 15;
 
@@ -73,9 +49,9 @@ function parseRange(startStr, endStr) {
 
 export function RangeCheck() {
   const [form, setForm] = useState({
-    session: 'Winter 2025',
-    course: 'B.E in COMPUTER SCIENCE & ENGINEERING NEP',
-    semester: '3',
+    session: 'Summer 2026',
+    course: ALL_NEP_BE_VALUE,
+    semester: '4',
     examType: 'Regular',
     startRoll: '25BD310550',
     endRoll: '25BD310560'
@@ -242,16 +218,16 @@ export function RangeCheck() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
-                  Course
+                  Course & Branch
                 </label>
                 <select
                   value={form.course}
                   onChange={setField('course')}
                   disabled={isRunning}
-                  className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 font-medium"
                 >
-                  {COURSES.map((c) => (
-                    <option key={c} value={c}>{c}</option>
+                  {ALL_COURSES.map((c) => (
+                    <option key={c.value} value={c.value}>{c.label}</option>
                   ))}
                 </select>
               </div>

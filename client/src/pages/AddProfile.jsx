@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppLayout } from '../layouts/AppLayout.jsx';
 import { api } from '../services/api.js';
+import { ALL_COURSES, ALL_NEP_BE_VALUE, SESSIONS, SEMESTERS } from '../constants/courses.js';
 
 const DEFAULTS = {
   university: 'Sant Gadge Baba Amravati University',
   roll_number: '',
   student_name: '',
-  course: 'B.Tech',
-  branch: 'Computer Science & Engineering',
+  course: ALL_NEP_BE_VALUE,
+  branch: 'Engineering',
   curriculum: 'NEP',
   semester: '4',
   exam_type: 'Regular',
-  exam_session: 'Summer',
+  exam_session: 'Summer 2026',
   academic_year: '',
   monitoring_interval: 2,
   active_window_enabled: false,
@@ -109,17 +110,26 @@ export function AddProfile() {
           {field('university', 'University')}
           {field('roll_number', 'Roll Number', { required: true, placeholder: 'e.g. 25BD310555' })}
           {field('student_name', 'Student Name (optional, for reference only)')}
-          <div className="grid grid-cols-2 gap-4">
-            {field('course', 'Course')}
-            {field('branch', 'Branch')}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {field('course', 'Course', {
+              select: true,
+              options: ALL_COURSES.map((c) => [c.value, c.label])
+            })}
+            {field('branch', 'Branch (optional, e.g. CSE / IT)')}
           </div>
           <div className="grid grid-cols-2 gap-4">
             {field('curriculum', 'Curriculum')}
-            {field('semester', 'Semester')}
+            {field('semester', 'Semester', {
+              select: true,
+              options: SEMESTERS.map((s) => [s.value, s.label])
+            })}
           </div>
           <div className="grid grid-cols-2 gap-4">
             {field('exam_type', 'Exam Type', { select: true, options: ['Regular', 'Back', 'Reval', 'EVS'] })}
-            {field('exam_session', 'Exam Session', { placeholder: 'e.g. Summer 2026' })}
+            {field('exam_session', 'Exam Session', {
+              select: true,
+              options: SESSIONS.map((s) => [s, s])
+            })}
           </div>
           {field('academic_year', 'Academic Year (optional)')}
 
